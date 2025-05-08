@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Organizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #eef2f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .task-form {
+            margin-bottom: 30px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: white;
+            margin: 10px auto;
+            padding: 15px;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .due-date {
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>✅ Task Organizer</h1>
+
+    <div class="task-form">
+        <input type="text" id="taskName" placeholder="Enter task" required>
+        <input type="date" id="dueDate" required>
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <ul id="taskList"></ul>
+
+    <script>
+        function addTask() {
+            const taskName = document.getElementById('taskName').value;
+            const dueDate = document.getElementById('dueDate').value;
+            if (taskName.trim() === '' || dueDate === '') return;
+
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${taskName}</strong><div class="due-date">Due: ${dueDate}</div>`;
+            document.getElementById('taskList').appendChild(li);
+
+            document.getElementById('taskName').value = '';
+            document.getElementById('dueDate').value = '';
+        }
+    </script>
+
+</body>
+</html>

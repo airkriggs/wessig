@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .calculator {
+      width: 320px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .display {
+      width: 100%;
+      height: 50px;
+      font-size: 1.8em;
+      text-align: right;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .calc-body {
+      display: flex;
+    }
+
+    .number-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      flex: 3;
+    }
+
+    .operators {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 10px;
+      flex: 1;
+    }
+
+    button {
+      font-size: 1.2em;
+      padding: 15px;
+      border: none;
+      border-radius: 6px;
+      background-color: #e0e0e0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #d0d0d0;
+    }
+
+    .equal {
+      background-color: #0077cc;
+      color: white;
+    }
+
+    .equal:hover {
+      background-color: #005fa3;
+    }
+
+    .clear {
+      background-color: #ff4d4d;
+      color: white;
+    }
+
+    .clear:hover {
+      background-color: #cc0000;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      background-color: #28a745;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background-color: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <form name="calcForm">
+      <input type="text" name="display" id="display" class="display" readonly />
+      <div class="calc-body">
+        <div class="number-pad">
+          <button type="button" onclick="addToDisplay('7')">7</button>
+          <button type="button" onclick="addToDisplay('8')">8</button>
+          <button type="button" onclick="addToDisplay('9')">9</button>
+          <button type="button" onclick="addToDisplay('4')">4</button>
+          <button type="button" onclick="addToDisplay('5')">5</button>
+          <button type="button" onclick="addToDisplay('6')">6</button>
+          <button type="button" onclick="addToDisplay('1')">1</button>
+          <button type="button" onclick="addToDisplay('2')">2</button>
+          <button type="button" onclick="addToDisplay('3')">3</button>
+          <button type="button" onclick="addToDisplay('0')">0</button>
+          <button type="button" onclick="addToDisplay('.')">.</button>
+          <button type="button" class="equal" onclick="calculate()">=</button>
+        </div>
+        <div class="operators">
+          <button type="button" onclick="addToDisplay('+')">+</button>
+          <button type="button" onclick="addToDisplay('-')">−</button>
+          <button type="button" onclick="addToDisplay('*')">×</button>
+          <button type="button" onclick="addToDisplay('/')">÷</button>
+          <button type="button" class="clear" onclick="clearDisplay()">C</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <button class="back-button" onclick="history.back()">← Back</button>
+
+  <script>
+    function addToDisplay(value) {
+      document.calcForm.display.value += value;
+    }
+
+    function clearDisplay() {
+      document.calcForm.display.value = '';
+    }
+
+    function calculate() {
+      try {
+        document.calcForm.display.value = eval(document.calcForm.display.value);
+      } catch (e) {
+        alert("Invalid Expression");
+        clearDisplay();
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sonic Ordering System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #333;
+        }
+
+        header p {
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .menu-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .menu-section h2 {
+            border-bottom: 2px solid #0077cc;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            color: #0077cc;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .item button {
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .item button:hover {
+            background-color: #005fa3;
+        }
+
+        .order-summary {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .order-summary h2 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        #order-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        #order-list li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        #total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .menu-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🍔 Welcome to Sonic!</h1>
+        <p>Order your favorite food below 👇</p>
+    </header>
+
+    <div class="menu-container" id="menu"></div>
+
+    <div class="order-summary">
+        <h2>Your Order 🛒</h2>
+        <ul id="order-list"></ul>
+        <div id="total">Total: $0.00</div>
+    </div>
+
+    <script>
+        const menu = {
+            "Burgers": {
+                "Cheeseburger": 4.99,
+                "Bacon Cheeseburger": 5.99,
+                "Double Sonic Burger": 6.49
+            },
+            "Hot Dogs": {
+                "Classic Hot Dog": 2.99,
+                "Chili Cheese Dog": 3.49,
+                "Premium Hot Dog": 3.99
+            },
+            "Drinks": {
+                "Cherry Limeade": 1.99,
+                "Soft Drink": 1.49,
+                "Milkshake": 3.99
+            },
+            "Sides": {
+                "Fries": 1.99,
+                "Tater Tots": 2.29,
+                "Mozzarella Sticks": 3.49
+            }
+        };
+
+        const order = {};
+
+        function renderMenu() {
+            const menuDiv = document.getElementById('menu');
+            for (const category in menu) {
+                const section = document.createElement('div');
+                section.className = 'menu-section';
+                section.innerHTML = `<h2>${category}</h2>`;
+
+                for (const item in menu[category]) {
+                    const price = menu[category][item];
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'item';
+                    itemDiv.innerHTML = `
+                        ${item} - $${price.toFixed(2)}
+                        <button onclick="addToOrder('${item}', ${price})">Add</button>
+                    `;
+                    section.appendChild(itemDiv);
+                }
+
+                menuDiv.appendChild(section);
+            }
+        }
+
+        function addToOrder(item, price) {
+            if (order[item]) {
+                order[item].quantity += 1;
+            } else {
+                order[item] = { price: price, quantity: 1 };
+            }
+            renderOrder();
+        }
+
+        function renderOrder() {
+            const orderList = document.getElementById('order-list');
+            orderList.innerHTML = '';
+            let total = 0;
+            for (const item in order) {
+                const details = order[item];
+                const lineTotal = details.price * details.quantity;
+                total += lineTotal;
+                const li = document.createElement('li');
+                li.textContent = `${item} x ${details.quantity} = $${lineTotal.toFixed(2)}`;
+                orderList.appendChild(li);
+            }
+            document.getElementById('total').textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        // Initialize
+        renderMenu();
+    </script>
+</body>
+</html>
+<!-- After everything else (like order form and receipt) -->
+
+<div style="text-align: center; margin-top: 40px;">
+    <a href="index.html" style="
+        text-decoration: none;
+        background: #0077cc;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        transition: background 0.3s;
+    ">Back to Home</a>
+</div>
